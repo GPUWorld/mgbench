@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mgbench/benchmark_runner.hpp>
+
 #include <iostream>
 
 namespace mgbench
@@ -14,14 +15,38 @@ namespace mgbench
     internal::benchmark_runner*
     internal::benchmark_runner::
     get_instance()
-    {
-        return &runner;
-    }
+    { return &runner; }
 
     void
     internal::benchmark_runner::
-    register_bechmark(u_ptr<benchmark_suite>&& suite)
+    register_benchmark(benchmark_suite* suite)
+    { _suites.push_back(suite); }
+
+    
+    std::vector<internal::data_bundle>
+    internal::benchmark_runner::
+    run_benchmarks()
     {
-        _suites.push_back(std::move(suite));
+        auto result = std::vector<internal::data_bundle>();
+        result.reserve(_suites.size());
+
+        for(auto& suite : _suites)
+        {
+            size_t idx = 0;
+            for(auto n : _scale)
+            {
+                result.emplace_back(_scale.size(),
+                                    _scale.size(),
+                                    suite->get_name());
+
+                result.back().x[idx] = n;
+                result.back().time[idx] =
+                    std::chrono::duration_cast<std::chrono::microseconds>(
+                        suite->run(n));
+                ++idx;
+            }
+        }
+
+        return compute_flops(std::move(result));
     }
 }

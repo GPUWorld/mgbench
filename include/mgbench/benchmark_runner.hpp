@@ -16,17 +16,35 @@ namespace mgbench
 {
     namespace internal
     {
+        struct data_bundle
+        {
+            inline data_bundle(size_t x_n, size_t y_n,
+                               std::string const& name)
+                : x(x_n), time(y_n), flops(y_n), name(name) {}
+
+            std::vector<size_t> x;
+            std::vector<std::chrono::microseconds> time;
+            std::vector<std::chrono::microseconds> flops;
+            std::string name;
+        };
+
+
         class benchmark_runner
         {
         private:
-            std::vector<benchmark_suite> _suites;
-       
-        protected:
-            void register_bechmark(benchmark_suite* suite);
+            std::vector<benchmark_suite*> _suites;
+
+            std::vector<data_bundle>
+            compute_flops(std::vector<data_bundle>&& data) const;
 
         public:
             size_t _iterations;
             std::vector<size_t> _scale;
+
+            void register_benchmark(benchmark_suite* suite);
+
+            std::vector<data_bundle>
+            run_benchmarks();
 
             static benchmark_runner*
             get_instance();

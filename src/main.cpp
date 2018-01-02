@@ -9,6 +9,7 @@
 #include <exception>
 
 void help();
+void mgbench_configuration();
 
 int main(int argc, char** argv)
 {
@@ -36,11 +37,14 @@ int main(int argc, char** argv)
             std::terminate();
         }
     }
+    
+    mgbench_configuration();
 
     if(print_result)
         ;
     if(graph_result)
         ;
+
 
     return 0;
 }

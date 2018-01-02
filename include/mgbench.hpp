@@ -7,6 +7,8 @@
 #ifndef _MGBENCH_MGBENCH_HPP_
 #define _MGBENCH_MGBENCH_HPP_
 
-
+#include <mgbench/add_benchmark.hpp>
+#include <mgbench/configuration.hpp>
+#include <mgbench/utils.hpp>
 
 #endif

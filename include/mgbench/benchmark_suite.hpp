@@ -34,10 +34,12 @@ namespace mgbench
 
         explicit benchmark_suite(std::string&& kernel_name);
 
+    public:
+        std::string get_name();
+
         std::chrono::duration<double>
         run(size_t n);
 
-    public:
         virtual void suite(size_t n) = 0;
     }; 
 }

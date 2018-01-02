@@ -18,9 +18,7 @@ namespace mgbench
     std::chrono::duration<double>
     chrono_reduce_mean(It begin, It end)
     {
-        auto sum = std::accumulate(begin,
-                                   end,
-                                   std::chrono::duration<double>(0));
+        auto sum = std::accumulate(begin, end, std::chrono::duration<double>(0));
         return sum / std::distance(begin, end);
     }
 
@@ -29,6 +27,11 @@ namespace mgbench
         :_kernel_name(kernel_name),
          _start_set(false),
          _end_set(false) {}
+
+    std::string
+    benchmark_suite::
+    get_name()
+    { return _kernel_name; }
 
     std::chrono::duration<double>
     benchmark_suite::

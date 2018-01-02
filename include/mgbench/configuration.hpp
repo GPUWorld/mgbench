@@ -13,6 +13,9 @@
 #include <algorithm>
 #include <cmath>
 
+#define MGBENCH_CONFIGURATION()                 \
+    void mgbench_configuration()
+
 namespace mgbench
 {
     inline void

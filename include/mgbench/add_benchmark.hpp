@@ -15,10 +15,10 @@
 #define MGBENCH_BENCHMARK(KERNEL_NAME)                                  \
     class MGBENCH_SUITE_NAME(KERNEL_NAME) : public mgbench::benchmark_suite \
     { MGBENCH_SUITE_NAME(KERNEL_NAME)()                                 \
-            : mgbench::benchmark_suite(std::string(KERNEL_NAME))        \
-        { benchmark_runner::get_instance()                              \
+            : mgbench::benchmark_suite(std::string(#KERNEL_NAME))       \
+        { mgbench::internal::benchmark_runner::get_instance()           \
                 ->register_benchmark(this); }                           \
-        void MGBENCH_SUITE_NAME(KERNEL_NAME)::suite(size_t MGBENCH_N);  \
+        void suite(size_t MGBENCH_N);                                   \
     };                                                                  \
     void MGBENCH_SUITE_NAME(KERNEL_NAME)::suite(size_t MGBENCH_N)
 
