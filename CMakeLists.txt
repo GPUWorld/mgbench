@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.8)
 project(mgbench)
 
 find_package(CUDA REQUIRED)
-find_package(Boost 1.64 REQUIRED)
+find_package(Boost 1.64 REQUIRED COMPONENTS system)
 
 add_definitions(-DCUDA_TOOLKIT_ROOT_DIR=${CUDA_TOOLKIT_ROOT_DIR})
 
@@ -31,6 +31,7 @@ set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(SOURCE_FILES
     ./test.cpp
     ${SOURCE_DIR}/main.cpp
+    ${SOURCE_DIR}/nvprof.cpp
     ${SOURCE_DIR}/benchmark_runner.cpp
     ${SOURCE_DIR}/benchmark_suite.cpp)
 

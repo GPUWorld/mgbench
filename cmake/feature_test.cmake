@@ -20,10 +20,7 @@ execute_process(COMMAND "${FEATURE_TEST_DIR}/cuda_gencode"
     OUTPUT_VARIABLE CUDA_GENCODE_TEST_STATUS)
 
 if(NOT ${CUDA_GENCODE_TEST_RESULT} EQUAL "0")
-    message(STATUS "running feature test - failed")
-    message(STATUS "disabling custom kernel build")
-    message("${CUDA_GENCODE_TEST_STATUS}")
-    set(BUILD_CUSTOM_KERNELS OFF)
+    message(FATAL_ERROR "running feature test - failed")
 else()
     string(REGEX REPLACE "\n$" ""
 	CUDA_GENCODE_TEST_STATUS "${CUDA_GENCODE_TEST_STATUS}")
