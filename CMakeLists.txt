@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 3.8)
 project(mgbench)
 
 find_package(CUDA REQUIRED)
+find_package(Boost 1.64 REQUIRED)
+
+add_definitions(-DCUDA_TOOLKIT_ROOT_DIR=${CUDA_TOOLKIT_ROOT_DIR})
 
 set(CMAKE_MODULE_PATH
     ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
@@ -24,17 +27,26 @@ set(BUILD_FLAGS
 set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS}; ${CUDA_GEN_CODE} -Xcompiler ${BUILD_FLAGS}")
 
 
-
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
-set(SOURCE_FILES ${SOURCE_DIR}/main.cpp)
+set(SOURCE_FILES
+    ./test.cpp
+    ${SOURCE_DIR}/main.cpp
+    ${SOURCE_DIR}/benchmark_runner.cpp
+    ${SOURCE_DIR}/benchmark_suite.cpp)
 
-cuda_add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+#cuda_add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+set(CMAKE_CXX_FLAGS "-std=c++14 -g -Wall -Wextra")
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
+    ${PROJECT_SOURCE_DIR}/include
+    ${Boost_INCLUDE_DIRS}
     ${CUDA_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
+    ${Boost_LIBRARIES}
     ${CUDA_LIBRARIES})
 
 
