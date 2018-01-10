@@ -18,17 +18,21 @@ int main(int argc, char** argv)
     bool graph_result = false;
     bool print_result = false;
 
+    if(argc == 1)
+    {
+        mgbench::internal::run_kernels();
+        return 0;
+    }
+
     for(int i = 1; i < argc; ++i)
     {
         auto opt = std::string(argv[i]);
 
-        if(opt == "__run__")
-            mgbench::internal::run_kernels();
-        else if(opt == "--graph" || opt == "-g")
-                graph_result = true;
-            else if(opt == "--print" || opt == "-p")
-                print_result = true;
-            else if(opt == "--help" || opt == "-h")
+        if(opt == "--graph" || opt == "-g")
+            graph_result = true;
+        else if(opt == "--print" || opt == "-p")
+            print_result = true;
+        else if(opt == "--help" || opt == "-h")
         {
             help();
             std::terminate();
