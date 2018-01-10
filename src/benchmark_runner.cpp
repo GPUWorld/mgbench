@@ -5,6 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mgbench/benchmark_runner.hpp>
+#include <mgbench/nvprof.hpp>
 
 #include <iostream>
 
@@ -22,6 +23,17 @@ namespace mgbench
     register_benchmark(benchmark_suite* suite)
     { _suites.push_back(suite); }
 
+    std::vector<benchmark_suite*>& 
+    internal::benchmark_runner::
+    get_suites() 
+    { return _suites; }
+
+    std::vector<internal::data_bundle>
+    internal::benchmark_runner::
+    compute_flops(std::vector<data_bundle>&& data) const
+    {
+        return data;
+    }
     
     std::vector<internal::data_bundle>
     internal::benchmark_runner::

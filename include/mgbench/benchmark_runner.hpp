@@ -46,6 +46,10 @@ namespace mgbench
             std::vector<data_bundle>
             run_benchmarks();
 
+            std::vector<benchmark_suite*>&
+            get_suites();
+
+
             static benchmark_runner*
             get_instance();
         };
