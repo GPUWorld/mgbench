@@ -8,6 +8,8 @@
 #include <iostream>
 #include <exception>
 
+#include "run_kernels.hpp"
+
 void help();
 void mgbench_configuration();
 
@@ -20,11 +22,13 @@ int main(int argc, char** argv)
     {
         auto opt = std::string(argv[i]);
 
-        if(opt == "--graph" || opt == "-g")
-            graph_result = true;
-        else if(opt == "--print" || opt == "-p")
-            print_result = true;
-        else if(opt == "--help" || opt == "-h")
+        if(opt == "__run__")
+            mgbench::internal::run_kernels();
+        else if(opt == "--graph" || opt == "-g")
+                graph_result = true;
+            else if(opt == "--print" || opt == "-p")
+                print_result = true;
+            else if(opt == "--help" || opt == "-h")
         {
             help();
             std::terminate();
