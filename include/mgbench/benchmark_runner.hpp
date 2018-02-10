@@ -24,7 +24,7 @@ namespace mgbench
 
             std::vector<size_t> x;
             std::vector<std::chrono::microseconds> time;
-            std::vector<std::chrono::microseconds> flops;
+            size_t flops;
             std::string name;
         };
 
@@ -33,6 +33,7 @@ namespace mgbench
         {
         private:
             std::vector<benchmark_suite*> _suites;
+
 
             std::vector<data_bundle>
             compute_flops(std::vector<data_bundle>&& data) const;
@@ -44,7 +45,7 @@ namespace mgbench
             void register_benchmark(benchmark_suite* suite);
 
             std::vector<data_bundle>
-            run_benchmarks();
+        run_benchmarks();
 
             std::vector<benchmark_suite*>&
             get_suites();

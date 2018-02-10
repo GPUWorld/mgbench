@@ -11,6 +11,8 @@
 
 namespace mgbench
 {
+    internal::nvprof_handler _nvprof_results;
+
     internal::benchmark_runner runner;
 
     internal::benchmark_runner*
@@ -32,6 +34,12 @@ namespace mgbench
     internal::benchmark_runner::
     compute_flops(std::vector<data_bundle>&& data) const
     {
+        for(auto& i : data)
+        {
+            size_t flop_count = _nvprof_results[data.name];
+            data.flops = data.time / flop_count;
+        }
+
         return data;
     }
     
