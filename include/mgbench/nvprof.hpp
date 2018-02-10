@@ -7,9 +7,10 @@
 #ifndef _MGBENCH_MGBENCH_NVPROF_HPP_
 #define _MGBENCH_MGBENCH_NVPROF_HPP_
 
-#include <string>
 #include <cstdlib>
+#include <string>
 #include <unordered_map>
+#include <vector>
 
 namespace boost{ namespace process{} }
 
@@ -21,6 +22,9 @@ namespace mgbench
         {
         private:
             std::unordered_map<std::string, size_t> _flops;
+
+            void
+            find_flops(std::vector<std::string>&& output);
 
         public:
             nvprof_handler();
