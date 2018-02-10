@@ -14,7 +14,7 @@
 
 namespace mgbench
 {
-    std::vector<std::string>
+    static std::vector<std::string>
     split_string(const std::string& str, char delimiter)
     {
         std::vector<std::string> strings;
@@ -30,7 +30,7 @@ namespace mgbench
         return strings;
     }
 
-    size_t
+    static size_t
     count_flops(size_t index,
                 std::vector<std::string> const& str)
     {
@@ -46,6 +46,17 @@ namespace mgbench
         return sp_value + sp_special_value;
     } 
 
+    static void
+    detect_error_message(std::string const& str)
+    {
+        auto idx = str.find("Error: ");
+        if(idx != std::string::npos)
+        {
+            auto error_msg = std::string(idx, std::string::npos);
+            throw std::runtime_error("error from nvprof: " + error_msg);
+        }
+    }
+
     namespace bp = boost::process;
 
     void
@@ -55,6 +66,8 @@ namespace mgbench
         size_t kernel_idx = 0;
         for(auto const& elem : output)
         {
+            detect_error_message(elem);
+
             if(idx != std::string::npos)
             {
                 auto kernel_name_idx = elem.find("Kernel: ");
